@@ -1,5 +1,8 @@
 'use client';
-
+import { getProducts } from "@/lib/api";
+import ProductCard from "@/components/ProductCard";
+import PriceChangeSections from "@/components/PriceChangeSections";
+import ProductList from "@/components/ProductList";
 import { useSyncExternalStore } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
@@ -42,8 +45,8 @@ const Home = () => {
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
             
             {/* left side text content*/}
-            <div className="relative z-10 max-w-2xl">
-              <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-sm text-green-200 min-h-[30px]">
+            <div className="relative z-10 max-w-2xl mb-14">
+              <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-sm text-green-200 min-h-7.5 mb-9">
                 {banglaDate}
               </span>
 
@@ -80,6 +83,10 @@ const Home = () => {
           </div>
         </section>
       </main>
+
+<PriceChangeSections />
+
+      <ProductList />
 
       <Footer />
     </>
