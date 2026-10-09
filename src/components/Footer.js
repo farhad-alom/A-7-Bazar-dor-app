@@ -1,20 +1,19 @@
 import Link from "next/link";
 
+
 const Footer = () => {
   return (
     <footer className="mt-12 border-t border-border bg-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between">
+     <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <div>
-          <Link href="/" className="text-xl font-bold text-primary">
-            🛒 বাজার দর
-          </Link>
+       
           <p className="mt-2 text-sm text-muted">
-            নিত্যপ্রয়োজনীয় পণ্যের দাম জানুন এক নজরে।
+           বাজার দর — প্রয়োজনীয় পণ্যের দাম এক নজরে।
           </p>
         </div>
 
         <p className="text-sm text-muted" suppressHydrationWarning>
-          © {new Date().getFullYear()} বাজার দর। সর্বস্বত্ব সংরক্ষিত।
+         সকল দাম সম্ভাব্য; বাজার অবস্থার ওপর নির্ভর করে পরিবর্তিত হয়।
         </p>
       </div>
     </footer>

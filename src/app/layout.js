@@ -1,4 +1,4 @@
-
+import { Toaster } from "react-hot-toast";
 import { Geist, Geist_Mono, Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 
@@ -27,8 +27,9 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="bn" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${banglaFont.variable} min-h-full antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${banglaFont.variable}  min-h-full antialiased`}
       >
+        <Toaster position="top-right" />
         {children}
       </body>
     </html>

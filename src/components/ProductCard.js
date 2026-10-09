@@ -23,7 +23,8 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Link
+ 
+ <Link
       href={`/product/${slug}`}
       className="block rounded-2xl border border-border bg-white p-4 transition hover:-translate-y-1 hover:shadow-md"
     >
@@ -53,6 +54,7 @@ const ProductCard = ({ product }) => {
         </span>
       </div>
     </Link>
+
   );
 };
 

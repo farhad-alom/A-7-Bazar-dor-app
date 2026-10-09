@@ -38,6 +38,23 @@ export default function SignupPage() {
     }
   }
 
+  async function handleSocialSignIn(provider) {
+    setError("");
+
+    try {
+      const { error } = await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        setError(error.message || "Social login করা যায়নি।");
+      }
+    } catch {
+      setError("Social login করা যায়নি। আবার চেষ্টা করো।");
+    }
+  }
+
   const inputClass = "w-full rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm outline-none focus:border-green-600 focus:bg-white";
 
   return (
@@ -92,11 +109,19 @@ export default function SignupPage() {
 
         {/* Social Buttons */}
         <div className="grid grid-cols-2 gap-3 text-xs font-semibold">
-          <button type="button" className="flex items-center justify-center gap-2 rounded-lg border border-slate-200 py-2.5 hover:bg-slate-50">
-            Google দিয়ে চালিয়ে যান
+          <button
+            type="button"
+            onClick={() => handleSocialSignIn("google")}
+            className="rounded-lg border border-[#dfe7df] px-2 py-2.5 text-sm font-medium hover:bg-green-50"
+          >
+           Google দিয়ে চালিয়ে যান
           </button>
-          <button type="button" className="flex items-center justify-center gap-2 rounded-lg border border-slate-200 py-2.5 hover:bg-slate-50">
-            GitHub দিয়ে চালিয়ে যান
+          <button
+            type="button"
+            onClick={() => handleSocialSignIn("github")}
+            className="rounded-lg border border-[#dfe7df] px-2 py-2.5 text-sm font-medium hover:bg-green-50"
+          >
+             GitHub দিয়ে চালিয়ে যান
           </button>
         </div>
 

@@ -57,7 +57,7 @@ const CategoryPage = () => {
         <Navbar />
         <PriceTicker />
     <main className="mx-auto max-w-6xl px-4 py-10">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+  <div className="mx-auto flex w-full max-w-6xl gap-2 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold">
           {category.icon} {category.nameBn}
         </h1>

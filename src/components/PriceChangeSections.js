@@ -22,7 +22,7 @@ const PriceChangeSections = () => {
     .slice(0, 6);
 
   return (
-    <div className="space-y-10 py-8">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
       <section>
         <h2 className="text-2xl font-bold"><span className="text-red-600 font-bold">▲</span> আজ দাম বেড়েছে </h2>
         <p className="mt-2 text-muted">যেসব পণ্যের দাম বেড়েছে</p>

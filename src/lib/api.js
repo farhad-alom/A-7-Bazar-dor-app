@@ -1,5 +1,5 @@
 
-const BASE_URL = "https://api.abcz.workers.dev/api/bazardor";
+const BASE_URL = "https://api.api-store.workers.dev/api/bazardor";
 
 export async function getProducts(category) {
   const url = category
