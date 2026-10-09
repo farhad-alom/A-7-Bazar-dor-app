@@ -1,0 +1,117 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+
+export default function SignupPage() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+
+    if (data.password !== data.confirmPassword) {
+      return setError("পাসওয়ার্ড দুটি মেলেনি!");
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await authClient.signUp.email({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
+
+      if (res?.error) return setError(res.error.message || "অ্যাকাউন্ট তৈরি করা যায়নি");
+      router.push("/signin");
+    } catch {
+      setError("সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const inputClass = "w-full rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm outline-none focus:border-green-600 focus:bg-white";
+
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[#f3f6f3] p-4 text-slate-800">
+      {/* Header */}
+      <div className="mb-6 text-center">
+        <h1 className="text-3xl font-bold">অ্যাকাউন্ট তৈরি করুন</h1>
+        <p className="mt-2 text-sm text-slate-500">
+          বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
+        </p>
+      </div>
+
+      {/* Card Form */}
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="mb-1 block text-sm font-semibold">নাম</label>
+            <input name="name" placeholder="যেমন: রহিম উদ্দিন" required className={inputClass} />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-semibold">ইমেইল</label>
+            <input name="email" type="email" placeholder="you@example.com" required className={inputClass} />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-semibold">পাসওয়ার্ড</label>
+            <input name="password" type="password" placeholder="কমপক্ষে ৮ অক্ষর" minLength={8} required className={inputClass} />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-semibold">পাসওয়ার্ড নিশ্চিত করুন</label>
+            <input name="confirmPassword" type="password" placeholder="আবার লিখুন" minLength={8} required className={inputClass} />
+          </div>
+
+          {error && <p className="text-sm font-medium text-red-600">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-[#008744] py-3 text-sm font-medium text-white hover:bg-[#007038] disabled:opacity-60"
+          >
+            {loading ? "তৈরি হচ্ছে..." : "অ্যাকাউন্ট তৈরি করুন"}
+          </button>
+        </form>
+
+        {/* Divider */}
+        <div className="relative my-6 text-center text-xs text-slate-400">
+          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200" /></div>
+          <span className="relative bg-white px-3">অথবা</span>
+        </div>
+
+        {/* Social Buttons */}
+        <div className="grid grid-cols-2 gap-3 text-xs font-semibold">
+          <button type="button" className="flex items-center justify-center gap-2 rounded-lg border border-slate-200 py-2.5 hover:bg-slate-50">
+            Google দিয়ে চালিয়ে যান
+          </button>
+          <button type="button" className="flex items-center justify-center gap-2 rounded-lg border border-slate-200 py-2.5 hover:bg-slate-50">
+            GitHub দিয়ে চালিয়ে যান
+          </button>
+        </div>
+
+        {/* Sign In Link */}
+        <p className="mt-6 text-center text-xs text-slate-600">
+          অ্যাকাউন্ট আছে?{" "}
+          <Link href="/signin" className="font-semibold text-green-600 hover:underline">
+            সাইন ইন করুন
+          </Link>
+        </p>
+      </div>
+
+      <Link href="/" className="mt-6 text-xs text-slate-500 hover:underline">
+        ← হোম পেজে ফিরে যান
+      </Link>
+    </main>
+  );
+}
