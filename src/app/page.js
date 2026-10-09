@@ -51,20 +51,18 @@ const Home = () => {
               </span>
 
               <h1 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl">
-                আজকের বাজার দর, <br />
-                এখন আপনার হাতেই
+                আজকের বাজারের দাম এক নজরে
               </h1>
 
               <p className="mt-4 max-w-xl text-sm leading-6 text-green-100 sm:text-base">
-                চাল, ডাল, তেল, মাছ ও নিত্যপ্রয়োজনীয় পণ্যের দাম
-                সহজেই দেখুন। বাজারের দর জানুন, সচেতনভাবে কেনাকাটা করুন।
+               চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
               </p>
 
               <a
                 href="#সব-পণ্য"
                 className="mt-6 inline-flex rounded-xl bg-white px-5 py-2.5 font-semibold text-green-950 transition hover:bg-green-100"
               >
-                পণ্যের দাম দেখুন →
+                সব পণ্য দেখুন →
               </a>
             </div>
 

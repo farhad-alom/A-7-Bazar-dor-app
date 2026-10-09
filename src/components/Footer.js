@@ -8,13 +8,12 @@ const Footer = () => {
           <Link href="/" className="text-xl font-bold text-primary">
             🛒 বাজার দর
           </Link>
-
           <p className="mt-2 text-sm text-muted">
             নিত্যপ্রয়োজনীয় পণ্যের দাম জানুন এক নজরে।
           </p>
         </div>
 
-        <p className="text-sm text-muted">
+        <p className="text-sm text-muted" suppressHydrationWarning>
           © {new Date().getFullYear()} বাজার দর। সর্বস্বত্ব সংরক্ষিত।
         </p>
       </div>
@@ -23,4 +22,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
