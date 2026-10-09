@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🛒 BazarDor (বাজার দর)
 
-## Getting Started
+## Overview
+**BazarDor (বাজার দর)** is a web-based commodity price-tracking application built for educational and learning purposes. The platform provides users with insights and updates on daily essential market prices in Bangladesh—including rice, lentils, oil, vegetables, fish, meat, eggs, and spices.
 
-First, run the development server:
+The primary goal of this project was to practice modern full-stack web development concepts, including dynamic routing, state management, responsive UI design, and authentication workflows in a Next.js environment.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+* **Framework:** Next.js (App Router)
+* **Frontend Library:** React
+* **Styling:** Tailwind CSS
+* **Fonts & UI:** Next.js Google Fonts (`Hind Siliguri` for Bengali typography), `react-hot-toast` for toast notifications
+* **Authentication:** Custom Auth Client (`auth-client`)
+* **Data Fetching:** Asynchronous JavaScript / REST API Integration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Key Features
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Live Price Ticker & Dynamic Date Display
+* Animated looping ticker showcasing real-time price updates and percentage changes for core essentials.
+* Localized Bangladeshi date display (`bn-BD`) using React's `useSyncExternalStore` to avoid SSR hydration mismatches.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Categorized Product Directory
+* Organizes commodities into intuitive categories (e.g., Rice, Lentils, Oil, Vegetables, Fish, Meat).
+* Allows effortless browsing and category filtering across essential market items.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Price Trend Tracking (Risers & Fallers)
+* Automatically filters and highlights products with recent price increases or price drops.
+* Displays visual indicators (color-coded badges and direction arrows) for market changes.
 
-## Deploy on Vercel
+### 4. Detailed Product Pages & Market Statistics
+* Dynamic routing (`/product/[slug]`) providing unit-based price metrics (kg, liter, piece, dozen).
+* Calculates key statistics automatically—including minimum, maximum, and average market rates, along with regional market breakdowns.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 5. User Authentication & Protected Workflows
+* Integrated Sign In, Sign Up, Profile, and Sign Out user session flows.
+* Uses React `<Suspense>` boundaries to handle client-side URL params and session state safely.

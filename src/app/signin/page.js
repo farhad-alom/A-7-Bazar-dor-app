@@ -56,6 +56,7 @@ export default function SignInPage() {
     }
 
     return (
+        
         <main className="min-h-[570px] bg-[#f0f5f0] px-4 py-10 sm:py-12">
             <div className="mx-auto max-w-md">
                 <div className="mb-6 text-center">

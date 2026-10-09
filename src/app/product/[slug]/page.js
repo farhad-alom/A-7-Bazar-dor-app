@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, Suspense } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Footer from "@/components/Footer";
@@ -18,7 +18,8 @@ const UNIT_NAMES = {
 
 const formatPrice = (price) => Number(price || 0).toLocaleString("bn-BD");
 
-export default function ProductDetailsPage() {
+// ১. মূল কন্টেন্ট ও useParams() এর লজিক আলাদা কম্পোনেন্টে রাখা হলো
+function ProductDetailsContent() {
   const { slug } = useParams();
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
@@ -56,7 +57,9 @@ export default function ProductDetailsPage() {
     }
 
     loadProduct();
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [slug, session, isPending, router]);
 
   // বাজারদর ক্যালকুলেশন Optimization
@@ -93,9 +96,8 @@ export default function ProductDetailsPage() {
 
   return (
     <>
-
-     <Navbar />
-  <PriceTicker />
+      <Navbar />
+      <PriceTicker />
 
       <main className="mx-auto min-h-[60vh] max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <Link href="/" className="text-sm text-primary hover:underline">
@@ -168,6 +170,15 @@ export default function ProductDetailsPage() {
 
       <Footer />
     </>
+  );
+}
+
+// ২. মূল পেজ এক্সপোর্ট করা হলো যা <Suspense> দিয়ে র্যাপ করা
+export default function ProductDetailsPage() {
+  return (
+    <Suspense fallback={<p className="py-20 text-center text-muted">লোডিং হচ্ছে...</p>}>
+      <ProductDetailsContent />
+    </Suspense>
   );
 }
 
