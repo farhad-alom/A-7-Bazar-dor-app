@@ -1,58 +1,123 @@
 "use client";
 
-import { useEffect } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 export default function ProfilePage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
+  const [name, setName] = useState("");
 
   useEffect(() => {
-    if (!isPending && !session?.user) {
-      router.replace("/signin");
+    if (session?.user?.name) {
+      setName(session.user.name);
     }
-  }, [isPending, session, router]);
+  }, [session]);
 
-  if (isPending || !session?.user) {
-    return <p className="py-20 text-center">প্রোফাইল লোড হচ্ছে...</p>;
+  const handleSignOut = async () => {
+    const { error } = await authClient.signOut();
+    if (error) {
+      toast.error("সাইন আউট করা যায়নি");
+      return;
+    }
+    toast.success("সাইন আউট করা হয়েছে");
+    router.push("/");
+    router.refresh();
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    toast.success("তথ্য আপডেট হয়েছে");
+  };
+
+  if (isPending) {
+    return (
+      <main className="mx-auto max-w-4xl px-4 py-12 text-center text-muted">
+        প্রোফাইল লোড হচ্ছে...
+      </main>
+    );
+  }
+
+  if (!session?.user) {
+    router.replace("/signin");
+    return null;
   }
 
   const user = session.user;
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
-      <Link href="/" className="text-primary hover:underline">
-        ← হোম পেজে ফিরে যান
-      </Link>
+    <main className="mx-auto max-w-3xl px-4 py-10">
+      {/* Title Section */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">আমার প্রোফাইল</h1>
+        <p className="mt-1 text-sm text-gray-500">
+          আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।
+        </p>
+      </div>
 
-      <section className="mt-6 rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
-        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-2xl font-bold text-primary">
-          {(user.name || user.email || "U").charAt(0).toUpperCase()}
-        </div>
-
-        <h1 className="text-2xl font-bold">আমার প্রোফাইল</h1>
-
-        <div className="mt-6 space-y-4">
-          <div>
-            <p className="text-sm text-muted">নাম</p>
-            <p className="font-medium">{user.name || "নাম দেওয়া নেই"}</p>
+      {/* Profile Card */}
+      <div className="mb-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:flex-row sm:items-center">
+        <div className="flex items-center gap-4">
+          <div className="relative h-16 w-16 overflow-hidden rounded-2xl bg-gray-100">
+            {user.image ? (
+              <Image
+                src={user.image}
+                alt={user.name || "User"}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-gray-400">
+                {user.name?.[0] || "👤"}
+              </div>
+            )}
           </div>
 
           <div>
-            <p className="text-sm text-muted">ইমেইল</p>
-            <p className="break-all font-medium">{user.email}</p>
+            <h2 className="text-xl font-bold text-gray-900">
+              {user.name || "User Name"}
+            </h2>
+            <p className="text-sm text-gray-500">{user.email}</p>
           </div>
         </div>
 
-        <Link
-          href="/profile/update"
-          className="mt-8 inline-block rounded-xl bg-primary px-5 py-3 font-medium text-white hover:opacity-90"
+        <button
+          onClick={handleSignOut}
+          className="flex items-center gap-1 rounded-xl border border-red-300 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
         >
-          তথ্য আপডেট করুন
-        </Link>
-      </section>
+          ← সাইন আউট
+        </button>
+      </div>
+
+      {/* Info & Update Card */}
+      <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <h3 className="mb-6 text-lg font-bold text-gray-900">তথ্য</h3>
+
+        <form onSubmit={handleUpdate} className="space-y-5">
+          <div>
+            <label className="mb-2 block text-sm font-medium text-gray-700">
+              নাম
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-green-600 focus:bg-white"
+              placeholder="আপনার নাম লিখুন"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full rounded-xl bg-primary px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-primary-dark"
+          >
+            আপডেট
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

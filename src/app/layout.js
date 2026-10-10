@@ -1,5 +1,8 @@
 import { Toaster } from "react-hot-toast";
 import { Geist, Geist_Mono, Hind_Siliguri } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import PriceTicker from "@/components/PriceTicker";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,17 +26,25 @@ export const metadata = {
   description: "প্রয়োজনীয় পণ্যের দাম এক নজরে দেখুন।",
 };
 
-const RootLayout = ({ children }) => {
+export default function RootLayout({ children }) {
   return (
     <html lang="bn" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${banglaFont.variable}  min-h-full antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${banglaFont.variable} flex min-h-screen flex-col antialiased bg-gray-50`}
       >
         <Toaster position="top-right" />
-        {children}
+        
+
+        <Navbar />
+        <PriceTicker />
+
+
+        <div className="flex-1">
+          {children}
+        </div>
+
+        <Footer />
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}
