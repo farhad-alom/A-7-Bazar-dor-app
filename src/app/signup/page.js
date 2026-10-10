@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -58,7 +60,7 @@ export default function SignupPage() {
   const inputClass = "w-full rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm outline-none focus:border-green-600 focus:bg-white";
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-[#f3f6f3] p-4 text-slate-800">
+    <main className="flex flex-col items-center bg-[#f3f6f3] px-4 pt-6 pb-12 text-slate-800">
       {/* Header */}
       <div className="mb-6 text-center">
         <h1 className="text-3xl font-bold">অ্যাকাউন্ট তৈরি করুন</h1>
@@ -108,20 +110,23 @@ export default function SignupPage() {
         </div>
 
         {/* Social Buttons */}
-        <div className="grid grid-cols-2 gap-3 text-xs font-semibold">
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
           <button
             type="button"
             onClick={() => handleSocialSignIn("google")}
-            className="rounded-lg border border-[#dfe7df] px-2 py-2.5 text-sm font-medium hover:bg-green-50"
+            className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe7df] px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-green-50 transition"
           >
-           Google দিয়ে চালিয়ে যান
+            <FcGoogle className="text-lg" />
+            <span>Google দিয়ে চালিয়ে যান</span>
           </button>
+          
           <button
             type="button"
             onClick={() => handleSocialSignIn("github")}
-            className="rounded-lg border border-[#dfe7df] px-2 py-2.5 text-sm font-medium hover:bg-green-50"
+            className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe7df] px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-green-50 transition"
           >
-             GitHub দিয়ে চালিয়ে যান
+            <FaGithub className="text-lg text-slate-800" />
+            <span>GitHub দিয়ে চালিয়ে যান</span>
           </button>
         </div>
 

@@ -1,10 +1,11 @@
-
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export default function SignInPage() {
     const router = useRouter();
@@ -56,16 +57,14 @@ export default function SignInPage() {
     }
 
     return (
-        
-        <main className="min-h-[570px] bg-[#f0f5f0] px-4 py-10 sm:py-12">
+       <main className="bg-[#f0f5f0] px-4 py-6 sm:py-8">
             <div className="mx-auto max-w-md">
                 <div className="mb-6 text-center">
                     <h1 className="text-2xl font-bold text-[#1d2b22]">
                         সাইন ইন
                     </h1>
                     <p className="mt-2 text-sm text-gray-500">
-                        বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে
-                        অ্যাকাউন্টে ঢুকুন।
+                        বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।
                     </p>
                 </div>
 
@@ -126,21 +125,23 @@ export default function SignInPage() {
                         <div className="h-px flex-1 bg-gray-200" />
                     </div>
 
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                         <button
                             type="button"
                             onClick={() => handleSocialSignIn("google")}
-                            className="rounded-lg border border-[#dfe7df] px-2 py-2.5 text-sm font-medium hover:bg-green-50"
+                            className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe7df] px-3 py-2.5 text-sm font-medium text-[#26352a] hover:bg-green-50 transition"
                         >
-                            Google দিয়ে চালিয়ে যান
+                            <FcGoogle className="text-lg" />
+                            <span>Google দিয়ে চালিয়ে যান</span>
                         </button>
 
                         <button
                             type="button"
                             onClick={() => handleSocialSignIn("github")}
-                            className="rounded-lg border border-[#dfe7df] px-2 py-2.5 text-sm font-medium hover:bg-green-50"
+                            className="flex items-center justify-center gap-2 rounded-lg border border-[#dfe7df] px-3 py-2.5 text-sm font-medium text-[#26352a] hover:bg-green-50 transition"
                         >
-                            GitHub দিয়ে চালিয়ে যান
+                            <FaGithub className="text-lg text-[#1d2b22]" />
+                            <span>GitHub দিয়ে চালিয়ে যান</span>
                         </button>
                     </div>
 
