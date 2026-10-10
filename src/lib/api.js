@@ -1,5 +1,5 @@
 
-const BASE_URL = "https://api.abcz.workers.dev/api/bazardor";
+const BASE_URL = "https://openapi.programming-hero.com/api/bazardor";
 
 async function fetchData(url, errorMessage) {
   let response;
