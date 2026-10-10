@@ -3,5 +3,5 @@ import { createAuthClient } from "better-auth/react";
 export const authClient = createAuthClient({
   baseURL: typeof window !== "undefined" 
     ? window.location.origin 
-    : process.env.NEXT_PUBLIC_APP_URL || "https://a-7-bazar-dor-ej9zqofnn-no-team-e544.vercel.app",
+    : process.env.NEXT_PUBLIC_APP_URL || "https://a-7-bazar-dor-9qayo98ur-no-team-e544.vercel.app",
 });
