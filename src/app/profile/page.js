@@ -10,6 +10,15 @@ export default function ProfilePage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
   const [name, setName] = useState("");
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPageLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (session?.user?.name) {
@@ -33,10 +42,36 @@ export default function ProfilePage() {
     toast.success("তথ্য আপডেট হয়েছে");
   };
 
-  if (isPending) {
+
+  if (isPending || isPageLoading) {
     return (
-      <main className="mx-auto max-w-4xl px-4 py-12 text-center text-muted">
-        প্রোফাইল লোড হচ্ছে...
+      <main className="mx-auto max-w-3xl px-4 py-10 animate-pulse">
+        {/* Title Skeleton */}
+        <div className="mb-6 space-y-2">
+          <div className="h-8 w-40 rounded bg-gray-200"></div>
+          <div className="h-4 w-60 rounded bg-gray-200"></div>
+        </div>
+
+     
+        <div className="mb-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:flex-row sm:items-center">
+          <div className="flex items-center gap-4">
+            <div className="h-16 w-16 rounded-2xl bg-gray-200"></div>
+            <div className="space-y-2">
+              <div className="h-5 w-32 rounded bg-gray-200"></div>
+              <div className="h-4 w-48 rounded bg-gray-200"></div>
+            </div>
+          </div>
+          <div className="h-9 w-28 rounded-xl bg-gray-200"></div>
+        </div>
+
+        <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm space-y-6">
+          <div className="h-6 w-20 rounded bg-gray-200"></div>
+          <div className="space-y-2">
+            <div className="h-4 w-12 rounded bg-gray-200"></div>
+            <div className="h-12 w-full rounded-xl bg-gray-200"></div>
+          </div>
+          <div className="h-12 w-full rounded-xl bg-gray-200"></div>
+        </div>
       </main>
     );
   }

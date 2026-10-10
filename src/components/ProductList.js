@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "@/lib/api";
 import ProductCard from "@/components/ProductCard";
+import ProductCardSkeleton from "@/components/ProductCardSkeleton";
+import Skeleton from "@/components/Skeleton"; 
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -18,13 +20,28 @@ const ProductList = () => {
 
   return (
    <section id="সব-পণ্য" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-    <h2 className="text-2xl font-bold">সব পণ্য</h2>
-    <p className="mt-2 text-muted">
-      নিত্যপ্রয়োজনীয় পণ্যের আজকের বাজার দর।
-    </p>
+    {loading ? (
+
+      <div className="space-y-3 mb-6">
+        <Skeleton className="h-8 w-36" />
+        <Skeleton className="h-4 w-64" />
+      </div>
+    ) : (
+      <>
+        <h2 className="text-2xl font-bold">সব পণ্য</h2>
+        <p className="mt-2 text-muted">
+          নিত্যপ্রয়োজনীয় পণ্যের আজকের বাজার দর।
+        </p>
+      </>
+    )}
 
     {loading ? (
-      <p className="py-10 text-muted">পণ্যের তথ্য লোড হচ্ছে...</p>
+   
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {[...Array(8)].map((_, i) => (
+          <ProductCardSkeleton key={i} />
+        ))}
+      </div>
     ) : error ? (
       <p className="py-10 text-red-600">{error}</p>
     ) : (
@@ -39,4 +56,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-

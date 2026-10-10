@@ -12,6 +12,15 @@ export default function UpdateProfilePage() {
 
   const [name, setName] = useState("");
   const [saving, setSaving] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPageLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!isPending && !session?.user) {
@@ -52,8 +61,26 @@ export default function UpdateProfilePage() {
     }
   }
 
-  if (isPending || !session?.user) {
-    return <p className="py-20 text-center">লোড হচ্ছে...</p>;
+  if (isPending || isPageLoading || !session?.user) {
+    return (
+      <main className="mx-auto max-w-xl px-4 py-12 animate-pulse">
+        <div className="h-5 w-36 rounded bg-gray-200 mb-6"></div>
+
+        <section className="mt-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm space-y-6">
+          <div className="space-y-2">
+            <div className="h-8 w-48 rounded bg-gray-200"></div>
+            <div className="h-4 w-64 rounded bg-gray-200"></div>
+          </div>
+
+          <div className="space-y-3 pt-2">
+            <div className="h-4 w-20 rounded bg-gray-200"></div>
+            <div className="h-12 w-full rounded-xl bg-gray-200"></div>
+          </div>
+
+          <div className="h-12 w-full rounded-xl bg-gray-200"></div>
+        </section>
+      </main>
+    );
   }
 
   return (

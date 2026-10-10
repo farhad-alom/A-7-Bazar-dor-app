@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
@@ -13,6 +13,15 @@ export default function SignInPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isPageLoading, setIsPageLoading] = useState(true);
+
+  
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsPageLoading(false);
+        }, 300); 
+        return () => clearTimeout(timer);
+    }, []);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -56,8 +65,30 @@ export default function SignInPage() {
         }
     }
 
+    if (isPageLoading) {
+        return (
+            <main className="bg-[#f0f5f0] px-4 py-6 sm:py-8 min-h-screen flex items-center justify-center">
+                <div className="mx-auto w-full max-w-md animate-pulse">
+                    <div className="mb-6 text-center">
+                        <div className="mx-auto h-8 w-32 rounded bg-gray-200 mb-2"></div>
+                        <div className="mx-auto h-4 w-64 rounded bg-gray-200"></div>
+                    </div>
+                    <div className="rounded-2xl border border-[#e0e9e0] bg-[#fbfdfb] p-5 shadow-sm sm:p-6 space-y-4">
+                        <div className="h-10 w-full rounded bg-gray-200"></div>
+                        <div className="h-10 w-full rounded bg-gray-200"></div>
+                        <div className="h-12 w-full rounded bg-gray-200"></div>
+                        <div className="flex gap-2 pt-2">
+                            <div className="h-10 w-1/2 rounded bg-gray-200"></div>
+                            <div className="h-10 w-1/2 rounded bg-gray-200"></div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        );
+    }
+
     return (
-       <main className="bg-[#f0f5f0] px-4 py-6 sm:py-8">
+       <main className="bg-[#f0f5f0] px-4 py-6 sm:py-8 min-h-screen">
             <div className="mx-auto max-w-md">
                 <div className="mb-6 text-center">
                     <h1 className="text-2xl font-bold text-[#1d2b22]">

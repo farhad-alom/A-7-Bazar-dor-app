@@ -1,16 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import Skeleton from "@/components/Skeleton"; // স্কেলেটন কম্পোনেন্ট ইমপোর্ট করা হলো
 
 export default function SignupPage() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // পেজ মাউন্ট স্টেট
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -58,6 +64,63 @@ export default function SignupPage() {
   }
 
   const inputClass = "w-full rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm outline-none focus:border-green-600 focus:bg-white";
+
+  // যদি মাউন্ট না হয় বা লোডিং অবস্থায় থাকে, তবে এই স্কেলেটন দেখাবে
+  if (!isMounted) {
+    return (
+      <main className="flex flex-col items-center bg-[#f3f6f3] px-4 pt-6 pb-12 text-slate-800">
+        {/* Header Skeleton */}
+        <div className="mb-6 text-center space-y-2">
+          <Skeleton className="h-9 w-60 mx-auto rounded" />
+          <Skeleton className="h-4 w-72 mx-auto rounded" />
+        </div>
+
+        {/* Card Form Skeleton */}
+        <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm space-y-4">
+          <div className="space-y-4">
+            <div>
+              <Skeleton className="h-4 w-12 mb-1 rounded" />
+              <Skeleton className="h-11 w-full rounded-lg" />
+            </div>
+            <div>
+              <Skeleton className="h-4 w-16 mb-1 rounded" />
+              <Skeleton className="h-11 w-full rounded-lg" />
+            </div>
+            <div>
+              <Skeleton className="h-4 w-20 mb-1 rounded" />
+              <Skeleton className="h-11 w-full rounded-lg" />
+            </div>
+            <div>
+              <Skeleton className="h-4 w-36 mb-1 rounded" />
+              <Skeleton className="h-11 w-full rounded-lg" />
+            </div>
+          </div>
+
+          <Skeleton className="h-11 w-full rounded-lg mt-6" />
+
+          {/* Divider Skeleton */}
+          <div className="relative my-6 text-center">
+            <Skeleton className="h-4 w-12 mx-auto rounded" />
+          </div>
+
+          {/* Social Buttons Skeleton */}
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+            <Skeleton className="h-11 w-full rounded-lg" />
+            <Skeleton className="h-11 w-full rounded-lg" />
+          </div>
+
+          {/* Footer Link Skeleton */}
+          <div className="mt-6 flex justify-center">
+            <Skeleton className="h-4 w-48 rounded" />
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <Skeleton className="h-4 w-32 rounded" />
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="flex flex-col items-center bg-[#f3f6f3] px-4 pt-6 pb-12 text-slate-800">

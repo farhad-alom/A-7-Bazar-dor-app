@@ -1,12 +1,21 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
-import { client, db } from "@/lib/mongodb";
+import clientPromise from "@/lib/mongodb";
+import { MongoClient } from "mongodb";
+
+// সরাসরি MongoClient থেকে ডাটাবেজ কানেক্ট করে অ্যাডাপ্টারে পাস করা
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri);
+const db = client.db("bazardor");
 
 export const auth = betterAuth({
   appName: "BazarDor",
-  baseURL: process.env.BETTER_AUTH_URL || "https://a7-bazardor-app.vercel.app", // এটি ভিভার্সেল লাইভ ইউআরএল রিড করবে
-  trustedOrigins: [process.env.BETTER_AUTH_URL], // ক্রস-ডোমেন রিকোয়েস্ট সুরক্ষিত রাখতে
-  database: mongodbAdapter(db, { client }),
+  baseURL: process.env.BETTER_AUTH_URL || "https://a7-bazardor-app.vercel.app",
+  trustedOrigins: [process.env.BETTER_AUTH_URL],
+  
+  database: mongodbAdapter(db, {
+    client,
+  }),
 
   emailAndPassword: {
     enabled: true,

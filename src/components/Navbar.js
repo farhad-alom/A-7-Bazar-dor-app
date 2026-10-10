@@ -25,7 +25,6 @@ const Navbar = () => {
 
   const { data: session, isPending } = authClient.useSession();
 
-
   useEffect(() => {
     setMounted(true);
     const dateStr = new Intl.DateTimeFormat("bn-BD", {
@@ -51,6 +50,39 @@ const Navbar = () => {
     router.refresh();
   };
 
+  // যতক্ষণ না মাউন্ট বা সেশন লোডিং শেষ হচ্ছে, পুরো ন্যাভবারের জায়গায় একটি কমপ্লিট স্কেলেটন দেখাবে
+  if (!mounted || isPending) {
+    return (
+      <header className="relative border-b border-border bg-white animate-pulse">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
+          {/* Logo Skeleton */}
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-gray-200" />
+            <div className="flex flex-col gap-1.5">
+              <div className="h-5 w-24 rounded bg-gray-200" />
+              <div className="h-3 w-32 rounded bg-gray-200" />
+            </div>
+          </div>
+
+          {/* Right Side Auth Buttons Skeleton */}
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-20 rounded-lg bg-gray-200" />
+            <div className="h-9 w-24 rounded-lg bg-gray-200" />
+          </div>
+        </div>
+
+        {/* Category Nav Skeleton */}
+        <div className="border-t border-border">
+          <div className="mx-auto flex max-w-7xl gap-3 overflow-x-auto px-4 py-3">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-8 w-20 shrink-0 rounded-full bg-gray-200" />
+            ))}
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="relative border-b border-border bg-white">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
@@ -62,16 +94,14 @@ const Navbar = () => {
           <div className="flex flex-col">
             <span className="text-xl font-bold text-primary">বাজার দর</span>
             <span className="text-xs text-muted">
-              {mounted ? banglaDate : ""}
+              {banglaDate}
             </span>
           </div>
         </Link>
 
         {/* Right Side Auth / User Dropdown */}
         <div className="flex items-center gap-2">
-          {!mounted || isPending ? (
-            <span className="text-sm text-muted">লোড হচ্ছে...</span>
-          ) : session?.user ? (
+          {session?.user ? (
             <div className="relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
